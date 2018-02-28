@@ -11,6 +11,7 @@ import com.google.android.things.contrib.driver.cap12xx.Cap12xxInputDriver;
 import java.io.IOException;
 
 import io.github.tscholze.tobbot.managers.MovementManager;
+import io.github.tscholze.tobbot.managers.WebServer;
 import io.github.tscholze.tobbot.utils.VehicleUtils;
 
 
@@ -20,6 +21,7 @@ public class TobbotActivity extends Activity
 
     private MovementManager movementManager;
     private Cap12xxInputDriver inputDriver;
+    private WebServer webServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,6 +29,7 @@ public class TobbotActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tobbot);
 
+        setupWebserver();
         setupMovementManager();
         setupCapacitiveTouchButtons();
     }
@@ -38,6 +41,7 @@ public class TobbotActivity extends Activity
 
         destroyCapacitiveTouchButtons();
         destroyMovementManager();
+        destroyWebserver();
     }
 
     @Override
@@ -68,6 +72,13 @@ public class TobbotActivity extends Activity
         }
 
         return true;
+    }
+
+    private void setupWebserver()
+    {
+        webServer = new WebServer();
+
+        if(webServer.startServing());
     }
 
     private void setupCapacitiveTouchButtons()
@@ -131,5 +142,11 @@ public class TobbotActivity extends Activity
 
         movementManager.close();
         movementManager = null;
+    }
+
+    private void destroyWebserver()
+    {
+        webServer.stopServing();
+        webServer = null;
     }
 }
