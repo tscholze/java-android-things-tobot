@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import io.github.tscholze.tobbot.listener.MovementRequestListener;
+import io.github.tscholze.tobbot.managers.BeepToneManager;
 import io.github.tscholze.tobbot.managers.CapButtonsManager;
 import io.github.tscholze.tobbot.managers.MovementManager;
 import io.github.tscholze.tobbot.managers.WebServerManager;
 import io.github.tscholze.tobbot.utils.MovementCommand;
-import io.github.tscholze.tobbot.listener.MovementRequestListener;
 
 /**
  * Vehicles main activity.
@@ -30,10 +31,16 @@ public class TobbotActivity extends Activity implements MovementRequestListener
     private CapButtonsManager capButtonsManager;
 
     /**
+     * Instance of the assigned beep tone manager.
+     * It will play beep sounds.
+     */
+    private BeepToneManager beepToneManager;
+
+    /**
      * Instance of the assigned web server manger to handle the locally hosted website.
      * It will map webserver requests to movements
      */
-    private WebServerManager webserverMananger;
+    private WebServerManager webserverManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,8 +50,9 @@ public class TobbotActivity extends Activity implements MovementRequestListener
 
         // Init managers
         movementManager = new MovementManager();
+        beepToneManager = new BeepToneManager();
         capButtonsManager = new CapButtonsManager(this);
-        webserverMananger = new WebServerManager(getApplicationContext(), true, this);
+        webserverManager = new WebServerManager(getApplicationContext(), true, this);
     }
 
     @Override
@@ -55,8 +63,11 @@ public class TobbotActivity extends Activity implements MovementRequestListener
         capButtonsManager.destroy();
         capButtonsManager = null;
 
-        webserverMananger.destroy();
-        webserverMananger = null;
+        webserverManager.destroy();
+        webserverManager = null;
+
+        beepToneManager.destroy();
+        beepToneManager = null;
 
         movementManager.destroy();
         movementManager = null;
@@ -79,6 +90,9 @@ public class TobbotActivity extends Activity implements MovementRequestListener
     public Boolean requestMovement(MovementCommand command)
     {
         assert movementManager != null;
+        assert beepToneManager != null;
+
+        beepToneManager.shortBeep();
 
         // TODO: Maybe handle .NOT_FOUND state
         return movementManager.move(command);

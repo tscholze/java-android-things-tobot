@@ -25,7 +25,7 @@ public class WebServerManager extends NanoHTTPD
     /**
      * Default port for browsing the hosted web page.
      */
-    private static final int DEFAULT_PORT = 80;
+    private static final int DEFAULT_PORT = 8080;
 
     /**
      * Default http GET parameter for the direction input.
