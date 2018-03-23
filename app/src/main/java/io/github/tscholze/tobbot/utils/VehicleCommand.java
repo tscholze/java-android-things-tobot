@@ -7,7 +7,7 @@ package io.github.tscholze.tobbot.utils;
  * The source is heavily inspired by:
  * https://github.com/androidthings/robocar/blob/launch/shared/src/main/java/com/example/androidthings/robocar/shared/CarCommands.java
  */
-public class VehicleCommands
+public class VehicleCommand
 {
     /**
      * Command for moving forward (raw value: 0)

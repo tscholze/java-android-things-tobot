@@ -3,11 +3,11 @@ package io.github.tscholze.tobbot.managers;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 
 import java.io.IOException;
 
-import io.github.tscholze.tobbot.utils.VehicleCommands;
+import io.github.tscholze.tobbot.utils.MovementCommand;
 
 /**
  * The manager is responsible for providing movement functionality.
@@ -46,11 +46,11 @@ public class MovementManager
     public MovementManager() throws IOException
     {
         // Map Pins to motors
-        PeripheralManagerService peripheralManagerService = new PeripheralManagerService();
-        rightMotorFwd = peripheralManagerService.openGpio(LEFT_MOTOR_FWD_GPIO_NAME);
-        rightMotorBwd = peripheralManagerService.openGpio(LEFT_MOTOR_BWD_GPIO_NAME);
-        leftMotorFwd = peripheralManagerService.openGpio(RIGHT_MOTOR_FWD_GPIO_NAME);
-        leftMotorBwd = peripheralManagerService.openGpio(RIGHT_MOTOR_BWD_GPIO_NAME);
+        PeripheralManager peripheralManager = PeripheralManager.getInstance();
+        rightMotorFwd = peripheralManager.openGpio(LEFT_MOTOR_FWD_GPIO_NAME);
+        rightMotorBwd = peripheralManager.openGpio(LEFT_MOTOR_BWD_GPIO_NAME);
+        leftMotorFwd = peripheralManager.openGpio(RIGHT_MOTOR_FWD_GPIO_NAME);
+        leftMotorBwd = peripheralManager.openGpio(RIGHT_MOTOR_BWD_GPIO_NAME);
 
         // Default configurations
         rightMotorFwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
@@ -64,20 +64,20 @@ public class MovementManager
      * @param command Movement command
      * @return True if command was executed successfully
      */
-    public boolean moveByCommand(int command)
+    public boolean move(MovementCommand command)
     {
         switch (command)
         {
-            case VehicleCommands.MOVE_FORWARD:
+            case FORWARD:
                 return moveForward();
 
-            case VehicleCommands.MOVE_BACKWARDS:
+            case BACKWARD:
                 return moveBackwards();
 
-            case VehicleCommands.MOVE_LEFT:
+            case LEFT:
                 return moveLeft();
 
-            case VehicleCommands.MOVE_RIGHT:
+            case RIGHT:
                 return moveRight();
 
             default:

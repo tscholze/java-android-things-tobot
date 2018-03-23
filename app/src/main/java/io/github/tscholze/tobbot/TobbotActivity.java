@@ -11,16 +11,32 @@ import com.google.android.things.contrib.driver.cap12xx.Cap12xxInputDriver;
 import java.io.IOException;
 
 import io.github.tscholze.tobbot.managers.MovementManager;
-import io.github.tscholze.tobbot.managers.WebServer;
+import io.github.tscholze.tobbot.servers.WebServer;
+import io.github.tscholze.tobbot.utils.MovementCommand;
+import io.github.tscholze.tobbot.utils.MovementRequestListener;
 import io.github.tscholze.tobbot.utils.VehicleUtils;
 
-
-public class TobbotActivity extends Activity
+/**
+ * Vehicles main activity.
+ * USed as an centralized starting point for calling manager, services and servers.
+ */
+public class TobbotActivity extends Activity implements MovementRequestListener
 {
     private static final String TAG = TobbotActivity.class.getSimpleName();
 
+    /**
+     * Instance of the assigned movement manager.
+     */
     private MovementManager movementManager;
+
+    /**
+     * Instance of the assigned captive button driver.
+     */
     private Cap12xxInputDriver inputDriver;
+
+    /**
+     * Instance of the assigned web server to handle the locally hosted website.
+     */
     private WebServer webServer;
 
     @Override
@@ -76,9 +92,7 @@ public class TobbotActivity extends Activity
 
     private void setupWebserver()
     {
-        webServer = new WebServer();
-
-        if(webServer.startServing());
+        webServer = new WebServer(getApplicationContext(), true, this);
     }
 
     private void setupCapacitiveTouchButtons()
@@ -86,7 +100,6 @@ public class TobbotActivity extends Activity
         try
         {
             inputDriver = new Cap12xxInputDriver("I2C1", null, Cap12xx.Configuration.CAP1208, VehicleUtils.keyCodes);
-
             inputDriver.setRepeatRate(Cap12xx.REPEAT_DISABLE);
             inputDriver.setMultitouchInputMax(1);
             inputDriver.register();
@@ -135,10 +148,7 @@ public class TobbotActivity extends Activity
 
     private void destroyMovementManager()
     {
-        if (movementManager == null)
-        {
-            return;
-        }
+        assert movementManager != null;
 
         movementManager.close();
         movementManager = null;
@@ -148,5 +158,14 @@ public class TobbotActivity extends Activity
     {
         webServer.stopServing();
         webServer = null;
+    }
+
+    @Override
+    public Boolean requestMovement(MovementCommand command)
+    {
+        assert movementManager != null;
+
+        // TODO: Maybe handle .NOT_FOUND state
+        return movementManager.move(command);
     }
 }

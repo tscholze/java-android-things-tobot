@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+    <title>ToboT - Control Panel</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css">
+</head>
+
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">ToboT - Control Panel</span>
+            </div>
+            <!-- Tabs -->
+            <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Control</a>
+                <a href="#fixed-tab-2" class="mdl-layout__tab">Information</a>
+            </div>
+        </header>
+
+        <main class="mdl-layout__content" style="margin: 0px auto;">
+            <!-- Tab 1 (Control) -->
+            <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+                <div class="page-content">
+                    <h4>Control the vehicle</h4>
+                    <p>Use the controls below to move the vehicle as you whish.</p>
+                    <br />
+
+                    <center>
+                        <table style="margin: 0px auto;">
+                            <!-- Forward -->
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <a href="/?d=forward">
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="transform: rotate(-90deg);">
+                                            <i class="material-icons">forward</i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <!-- Left & right -->
+                            <tr>
+                                <td>
+                                    <a href="/?d=left">
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="transform: rotate(180deg);">>
+                                            <i class="material-icons">forward</i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <a href="/?d=right">
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                                            <i class="material-icons">forward</i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <!-- Backward -->
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>
+                                    <a href="/?d=backward">
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="transform: rotate(90deg);">
+                                            <i class="material-icons">forward</i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                            <!-- Stop -->
+                            <tr>
+                                <td colspan="3" style="padding-top:30px;">
+                                    <a href="/?d=stop">
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" style="width: 100%;">
+                                            <i class="material-icons">stop</i>
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="padding-top: 30px; color: #a0a0a0;">Don't drink and drive</p>
+                    </center>
+                </div>
+            </section>
+
+            <!-- Tab 2 (Information) -->
+            <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+                <div class="page-content">
+                    <h3>Further Information</h3>
+                    <p>
+                        <strong>TobboT</strong> is a ... </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
+
+</html>
