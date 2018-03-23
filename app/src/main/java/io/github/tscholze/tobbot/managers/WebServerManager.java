@@ -1,4 +1,4 @@
-package io.github.tscholze.tobbot.servers;
+package io.github.tscholze.tobbot.managers;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,32 +11,31 @@ import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 import io.github.tscholze.tobbot.utils.MovementCommand;
-import io.github.tscholze.tobbot.utils.MovementRequestListener;
-import io.github.tscholze.tobbot.utils.VehicleCommand;
+import io.github.tscholze.tobbot.listener.MovementRequestListener;
 
 
 /**
  * App's web server that provides the capabilities
  * to control the TobboT via http requests.
  */
-public class WebServer extends NanoHTTPD
+public class WebServerManager extends NanoHTTPD
 {
-    private static final String TAG = WebServer.class.getSimpleName();
-
-    /**
-     * Callback listener to connect to the host activity.
-     */
-    private MovementRequestListener movementRequestListener;
+    private static final String TAG = WebServerManager.class.getSimpleName();
 
     /**
      * Default port for browsing the hosted web page.
      */
-    private static final int DEFAULT_PORT = 8080;
+    private static final int DEFAULT_PORT = 80;
 
     /**
      * Default http GET parameter for the direction input.
      */
     private static final String DIRECTION_GET_KEY = "d";
+
+    /**
+     * Callback listener to connect to the host activity.
+     */
+    private MovementRequestListener movementRequestListener;
 
     /**
      * The web content that will be delivered.
@@ -51,7 +50,7 @@ public class WebServer extends NanoHTTPD
      * @param autostart Defines if the server should autos tart serving.
      * @param movementRequestListener Attached movement listener.
      */
-    public WebServer(Context context, boolean autostart, MovementRequestListener movementRequestListener)
+    public WebServerManager(Context context, boolean autostart, MovementRequestListener movementRequestListener)
     {
         super(DEFAULT_PORT);
         setupContent(context);
@@ -101,9 +100,9 @@ public class WebServer extends NanoHTTPD
     }
 
     /**
-     * Stops the serving of the web server
+     * Stops safely the http servings.
      */
-    public void stopServing()
+    public void destroy()
     {
         stop();
     }

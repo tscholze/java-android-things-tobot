@@ -2,23 +2,17 @@ package io.github.tscholze.tobbot;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 
-import com.google.android.things.contrib.driver.cap12xx.Cap12xx;
-import com.google.android.things.contrib.driver.cap12xx.Cap12xxInputDriver;
-
-import java.io.IOException;
-
+import io.github.tscholze.tobbot.managers.CapButtonsManager;
 import io.github.tscholze.tobbot.managers.MovementManager;
-import io.github.tscholze.tobbot.servers.WebServer;
+import io.github.tscholze.tobbot.managers.WebServerManager;
 import io.github.tscholze.tobbot.utils.MovementCommand;
-import io.github.tscholze.tobbot.utils.MovementRequestListener;
-import io.github.tscholze.tobbot.utils.VehicleUtils;
+import io.github.tscholze.tobbot.listener.MovementRequestListener;
 
 /**
  * Vehicles main activity.
- * USed as an centralized starting point for calling manager, services and servers.
+ * USed as an centralized starting point for calling and connecting manager, services and servers.
  */
 public class TobbotActivity extends Activity implements MovementRequestListener
 {
@@ -30,14 +24,16 @@ public class TobbotActivity extends Activity implements MovementRequestListener
     private MovementManager movementManager;
 
     /**
-     * Instance of the assigned captive button driver.
+     * Instance of the assigned captive buttons manager.
+     * It will map button touches to movements.
      */
-    private Cap12xxInputDriver inputDriver;
+    private CapButtonsManager capButtonsManager;
 
     /**
-     * Instance of the assigned web server to handle the locally hosted website.
+     * Instance of the assigned web server manger to handle the locally hosted website.
+     * It will map webserver requests to movements
      */
-    private WebServer webServer;
+    private WebServerManager webserverMananger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -45,9 +41,10 @@ public class TobbotActivity extends Activity implements MovementRequestListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tobbot);
 
-        setupWebserver();
-        setupMovementManager();
-        setupCapacitiveTouchButtons();
+        // Init managers
+        movementManager = new MovementManager();
+        capButtonsManager = new CapButtonsManager(this);
+        webserverMananger = new WebServerManager(getApplicationContext(), true, this);
     }
 
     @Override
@@ -55,15 +52,14 @@ public class TobbotActivity extends Activity implements MovementRequestListener
     {
         super.onDestroy();
 
-        destroyCapacitiveTouchButtons();
-        destroyMovementManager();
-        destroyWebserver();
-    }
+        capButtonsManager.destroy();
+        capButtonsManager = null;
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
+        webserverMananger.destroy();
+        webserverMananger = null;
+
+        movementManager.destroy();
+        movementManager = null;
     }
 
     @Override
@@ -76,88 +72,7 @@ public class TobbotActivity extends Activity implements MovementRequestListener
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event)
     {
-        Log.d(TAG, "Pressed key: " + keyCode);
-
-        if (movementManager.getIsMoving())
-        {
-            movementManager.stop();
-        }
-        else
-        {
-            movementManager.moveForward();
-        }
-
-        return true;
-    }
-
-    private void setupWebserver()
-    {
-        webServer = new WebServer(getApplicationContext(), true, this);
-    }
-
-    private void setupCapacitiveTouchButtons()
-    {
-        try
-        {
-            inputDriver = new Cap12xxInputDriver("I2C1", null, Cap12xx.Configuration.CAP1208, VehicleUtils.keyCodes);
-            inputDriver.setRepeatRate(Cap12xx.REPEAT_DISABLE);
-            inputDriver.setMultitouchInputMax(1);
-            inputDriver.register();
-        }
-        catch (IOException e)
-        {
-            Log.w(TAG, "Unable to open driver connection", e);
-        }
-    }
-
-    private void setupMovementManager()
-    {
-        try
-        {
-            movementManager = new MovementManager();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    private void destroyCapacitiveTouchButtons()
-    {
-        if (inputDriver == null)
-        {
-            return;
-        }
-
-        inputDriver.unregister();
-
-        try
-        {
-            inputDriver.close();
-        }
-        catch (IOException e)
-        {
-            Log.w(TAG, "Unable to close touch driver", e);
-        }
-        finally
-        {
-            inputDriver = null;
-        }
-    }
-
-
-    private void destroyMovementManager()
-    {
-        assert movementManager != null;
-
-        movementManager.close();
-        movementManager = null;
-    }
-
-    private void destroyWebserver()
-    {
-        webServer.stopServing();
-        webServer = null;
+        return capButtonsManager.handle(keyCode);
     }
 
     @Override

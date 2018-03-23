@@ -41,22 +41,28 @@ public class MovementManager
 
     /**
      * Instantiates and configures all movement related parts like motors.
-     * @throws IOException If the system was not able to open any GPIO connections.
      */
-    public MovementManager() throws IOException
+    public MovementManager()
     {
         // Map Pins to motors
         PeripheralManager peripheralManager = PeripheralManager.getInstance();
-        rightMotorFwd = peripheralManager.openGpio(LEFT_MOTOR_FWD_GPIO_NAME);
-        rightMotorBwd = peripheralManager.openGpio(LEFT_MOTOR_BWD_GPIO_NAME);
-        leftMotorFwd = peripheralManager.openGpio(RIGHT_MOTOR_FWD_GPIO_NAME);
-        leftMotorBwd = peripheralManager.openGpio(RIGHT_MOTOR_BWD_GPIO_NAME);
+        try
+        {
+            rightMotorFwd = peripheralManager.openGpio(LEFT_MOTOR_FWD_GPIO_NAME);
+            rightMotorBwd = peripheralManager.openGpio(LEFT_MOTOR_BWD_GPIO_NAME);
+            leftMotorFwd = peripheralManager.openGpio(RIGHT_MOTOR_FWD_GPIO_NAME);
+            leftMotorBwd = peripheralManager.openGpio(RIGHT_MOTOR_BWD_GPIO_NAME);
 
-        // Default configurations
-        rightMotorFwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-        rightMotorBwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-        leftMotorFwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
-        leftMotorBwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+            // Default configurations
+            rightMotorFwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+            rightMotorBwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+            leftMotorFwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+            leftMotorBwd.setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW);
+        }
+        catch (IOException e)
+        {
+            System.out.print(e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -154,7 +160,7 @@ public class MovementManager
      * Stops and safely closes all GPIO pin connections.
      * Use this method on destroy.
      */
-    public void close()
+    public void destroy()
     {
         stop();
 
