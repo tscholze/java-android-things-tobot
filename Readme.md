@@ -1,4 +1,4 @@
-# TobboT
+# ToboT
 
 [![Build Status](https://travis-ci.org/tscholze/java-android-things-tobbot.svg?branch=master)](https://travis-ci.org/tscholze/java-android-things-tobbot)
 
@@ -7,8 +7,9 @@ I'll update the readme file if a more clearer vision of the project is available
 
 ### Prerequisites
 
-* Android Things Developer Preview 7 or higher
-* Raspberry Pi Explorer HAT
+* [Android Things](https://developer.android.com/things/index.html) Developer Preview 7 or higher
+* Pimoroni [STS Pi](https://shop.pimoroni.de/products/sts-pi) Kit
+* Pimoroni [Explorer HAT](https://shop.pimoroni.de/products/explorer-hat)
 
 
 ## Contributing
