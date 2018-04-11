@@ -29,5 +29,9 @@ dependencies {
     api 'com.google.android.things.contrib:driver-cap12xx:0.5'
 
     compile 'org.nanohttpd:nanohttpd:2.3.1'
+    compile 'com.google.firebase:firebase-database:12.0.1'
     compileOnly 'com.google.android.things:androidthings:0.7-devpreview'
 }
+
+
+apply plugin: 'com.google.gms.google-services'

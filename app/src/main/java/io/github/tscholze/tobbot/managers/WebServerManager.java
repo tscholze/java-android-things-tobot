@@ -20,6 +20,9 @@ import io.github.tscholze.tobbot.listener.MovementRequestListener;
  */
 public class WebServerManager extends NanoHTTPD
 {
+    /**
+     * Unique TAG.
+     */
     private static final String TAG = WebServerManager.class.getSimpleName();
 
     /**

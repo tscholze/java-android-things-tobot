@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import io.github.tscholze.tobbot.listener.MovementRequestListener;
 import io.github.tscholze.tobbot.managers.BeepToneManager;
 import io.github.tscholze.tobbot.managers.CapButtonsManager;
+import io.github.tscholze.tobbot.managers.FirebaseDatabaseManager;
 import io.github.tscholze.tobbot.managers.MovementManager;
+import io.github.tscholze.tobbot.managers.RemoteCommandManager;
 import io.github.tscholze.tobbot.managers.WebServerManager;
 import io.github.tscholze.tobbot.utils.MovementCommand;
 
@@ -17,12 +22,20 @@ import io.github.tscholze.tobbot.utils.MovementCommand;
  */
 public class TobbotActivity extends Activity implements MovementRequestListener
 {
+    /**
+     * Unique TAG.
+     */
     private static final String TAG = TobbotActivity.class.getSimpleName();
 
     /**
      * Instance of the assigned movement manager.
      */
     private MovementManager movementManager;
+
+    /**
+     * Instance of assigned remote command manager.
+     */
+    private RemoteCommandManager remoteCommandManager;
 
     /**
      * Instance of the assigned captive buttons manager.
@@ -42,6 +55,7 @@ public class TobbotActivity extends Activity implements MovementRequestListener
      */
     private WebServerManager webserverManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,6 +67,7 @@ public class TobbotActivity extends Activity implements MovementRequestListener
         beepToneManager = new BeepToneManager();
         capButtonsManager = new CapButtonsManager(this);
         webserverManager = new WebServerManager(getApplicationContext(), true, this);
+        remoteCommandManager = new RemoteCommandManager(this);
     }
 
     @Override
@@ -68,6 +83,9 @@ public class TobbotActivity extends Activity implements MovementRequestListener
 
         beepToneManager.destroy();
         beepToneManager = null;
+
+        remoteCommandManager.destroy();
+        remoteCommandManager = null;
 
         movementManager.destroy();
         movementManager = null;

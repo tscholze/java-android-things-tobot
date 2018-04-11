@@ -23,6 +23,9 @@ import io.github.tscholze.tobbot.utils.MovementCommand;
  */
 public class MovementManager
 {
+    /**
+     * Unique TAG.
+     */
     private final String TAG = MovementManager.class.getSimpleName();
 
     @SuppressWarnings("FieldCanBeLocal")
@@ -158,7 +161,7 @@ public class MovementManager
 
     /**
      * Stops and safely closes all GPIO pin connections.
-     * Use this method on destroy.
+     * Use this method in onDestroy().
      */
     public void destroy()
     {

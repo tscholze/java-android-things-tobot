@@ -95,3 +95,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# Firebase credentials
+google-services.json
+

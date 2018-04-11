@@ -17,6 +17,9 @@ import io.github.tscholze.tobbot.utils.VehicleUtils;
  */
 public class CapButtonsManager
 {
+    /**
+     * Unique TAG.
+     */
     private final String TAG = CapButtonsManager.class.getSimpleName();
 
     /**
@@ -83,7 +86,6 @@ public class CapButtonsManager
      * Maps Key down events in contact of the Explorer HAT captive buttons to vehicle movements.
      *
      * @param keyCode Key code of the triggered button.
-     *
      * @return True if the key code was handled successfully.
      */
     public boolean handle(int keyCode)
