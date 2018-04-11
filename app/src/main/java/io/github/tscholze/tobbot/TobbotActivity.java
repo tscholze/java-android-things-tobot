@@ -67,7 +67,7 @@ public class TobbotActivity extends Activity implements MovementRequestListener
         beepToneManager = new BeepToneManager();
         capButtonsManager = new CapButtonsManager(this);
         webserverManager = new WebServerManager(getApplicationContext(), true, this);
-        remoteCommandManager = new RemoteCommandManager(this);
+        remoteCommandManager = new RemoteCommandManager("1", this);
     }
 
     @Override

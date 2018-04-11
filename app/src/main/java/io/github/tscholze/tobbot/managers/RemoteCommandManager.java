@@ -59,7 +59,7 @@ public class RemoteCommandManager
      * @param requiredConsumerId Required consumer id to accepted remote commands.
      * @param movementRequestListener Attached movement listener.
      */
-    public RemoteCommandManager(String requiredConsumerId, final MovementRequestListener movementRequestListener)
+    public RemoteCommandManager(final String requiredConsumerId, final MovementRequestListener movementRequestListener)
     {
         this.requiredConsumerId = requiredConsumerId;
         this.movementRequestListener = movementRequestListener;
