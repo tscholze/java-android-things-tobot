@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import io.github.tscholze.tobbot.listener.MovementRequestListener;
 import io.github.tscholze.tobbot.managers.BeepToneManager;
 import io.github.tscholze.tobbot.managers.CapButtonsManager;
-import io.github.tscholze.tobbot.managers.FirebaseDatabaseManager;
 import io.github.tscholze.tobbot.managers.MovementManager;
 import io.github.tscholze.tobbot.managers.RemoteCommandManager;
 import io.github.tscholze.tobbot.managers.WebServerManager;
@@ -54,6 +50,11 @@ public class TobbotActivity extends Activity implements MovementRequestListener
      * It will map webserver requests to movements
      */
     private WebServerManager webserverManager;
+
+    /**
+     * Contains the current command.
+     */
+    private MovementCommand currentCommand = MovementCommand.STOP;
 
 
     @Override
@@ -111,6 +112,13 @@ public class TobbotActivity extends Activity implements MovementRequestListener
         assert beepToneManager != null;
 
         beepToneManager.shortBeep();
+
+        if (currentCommand.equals(command))
+        {
+            return false;
+        }
+
+        currentCommand = command;
 
         // TODO: Maybe handle .NOT_FOUND state
         return movementManager.move(command);

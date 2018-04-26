@@ -73,29 +73,39 @@ public class RemoteCommandManager
             {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
                 {
+                    // Get RemoteCommand object from snapshot value.
                     RemoteCommand remoteCommand = postSnapshot.getValue(RemoteCommand.class);
 
                     // Check if remoteCommand is valid
                     // 1. It has to be set
                     // 2. It has no execution date
                     // 3. The consumer should be the current vehicle.
-                    if (remoteCommand == null || remoteCommand.executionTimestamp != 0|| remoteCommand.consumerId != requiredConsumerId)
+                    if (remoteCommand == null || remoteCommand.executionTimestamp != 0 || !remoteCommand.consumerId.equals(requiredConsumerId))
                     {
                         Log.d(TAG, "Ignored remote command");
                         continue;
                     }
 
+                    // Set id.
+                    remoteCommand.id = postSnapshot.getKey();
+
+                    // Request movement from remote command.
                     MovementCommand command = remoteCommand.asMovementCommand();
+
+                    // Check if movement request could be handeled.
                     Boolean success = movementRequestListener.requestMovement(command);
 
+                    // If yes, update the enity and set the execution date to now.
+                    // else, do nothing but log.
                     if (success)
                     {
+                        Log.d(TAG, "Updating command with execution time stamp");
                         remoteCommand.executionTimestamp = new Date().getTime();
                         FirebaseDatabaseManager.update(ROOT_IDENTIFIER, remoteCommand);
                     }
                     else
                     {
-                        Log.e(TAG, "Could not execute remote command");
+                        Log.e(TAG, "Remote command was not executed");
                     }
                 }
             }
