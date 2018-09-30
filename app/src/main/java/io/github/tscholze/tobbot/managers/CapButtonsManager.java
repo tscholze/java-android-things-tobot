@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.google.android.things.contrib.driver.cap12xx.Cap12xx;
 import com.google.android.things.contrib.driver.cap12xx.Cap12xxInputDriver;
+import com.google.android.things.contrib.driver.cap1xxx.Cap1xxx;
+import com.google.android.things.contrib.driver.cap1xxx.Cap1xxxInputDriver;
 
 import java.io.IOException;
 
@@ -58,7 +60,7 @@ public class CapButtonsManager
     /**
      * Instance of the assigned captive button driver.
      */
-    private Cap12xxInputDriver inputDriver;
+    private Cap1xxxInputDriver inputDriver;
 
     /**
      * Initialing that assignes a callback listener.
@@ -71,8 +73,8 @@ public class CapButtonsManager
 
         try
         {
-            inputDriver = new Cap12xxInputDriver("I2C1", null, Cap12xx.Configuration.CAP1208, VehicleUtils.keyCodes);
-            inputDriver.setRepeatRate(Cap12xx.REPEAT_DISABLE);
+            inputDriver = new Cap1xxxInputDriver("I2C1", null, Cap12xx.Configuration.CAP1208, VehicleUtils.keyCodes);
+            inputDriver.setRepeatRate(Cap1xxx.REPEAT_DISABLE);
             inputDriver.setMultitouchInputMax(1);
             inputDriver.register();
         }
