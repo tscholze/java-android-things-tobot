@@ -10,6 +10,10 @@ Tobot was never be intend to be more than a great and enjoyable sparetime projec
 
 For more information please have a look at the German posts ([What is Tobot?](https://dbudwm.wordpress.com/2018/04/04/android-things-der-anfang-von-tobot/), [Google Assistant Feature](https://dbudwm.wordpress.com/2018/05/03/google-assistant-firebase-function-database-fahrtrichtung-von-tobot-via-stimme-steuern/)) on my personal blog.
 
+## Information
+
+Due to the lost interest of Google in Android IoT and missing support for more modern Raspberry Pis is this project at the moment on hold. I would be happy if this project could live longer.
+
 ## Prerequisites
 
 ### Required
