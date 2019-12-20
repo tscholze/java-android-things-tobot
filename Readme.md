@@ -8,7 +8,7 @@ It also contains different other remote control methods like a website that is h
 
 Tobot was never be intend to be more than a great and enjoyable sparetime project. That means, no code is production-ready. 
 
-For more information please have a look at the German posts ([What is Tobot?](https://dbudwm.wordpress.com/2018/04/04/android-things-der-anfang-von-tobot/), [Google Assistant Feature](https://dbudwm.wordpress.com/2018/05/03/google-assistant-firebase-function-database-fahrtrichtung-von-tobot-via-stimme-steuern/)) on my personal blog.
+For more information please have a look at the German posts ([What is Tobot?](https://tscholze.uber.space/2018/04/04/android-things-der-anfang-von-tobot/), [Google Assistant Feature](https://tscholze.uber.space/2018/05/03/google-assistant-firebase-function-database-fahrtrichtung-von-tobot-via-stimme-steuern/)) on my personal blog.
 
 ## Information
 
@@ -102,6 +102,10 @@ The Google Assistant triggers an Action, the Action calls a Firebase Function, t
 
 <center><img src="https://github.com/tscholze/java-android-things-tobot/blob/master/docs/flow.png" /></center>
 
+## Publications
+- Personal Blog: [[Android Things] Der Anfang von ToboT](https://tscholze.uber.space/2018/04/04/android-things-der-anfang-von-tobot/)
+- Personal Blog: [[Google Assistant & Firebase] Fahrtrichtung von ToboT via Stimme steuern](https://tscholze.uber.space/2018/05/03/google-assistant-firebase-function-database-fahrtrichtung-von-tobot-via-stimme-steuern/)
+- Hackster.io: [ToboT: Android Things-Based, Voice-Controlled Vehicle](https://www.hackster.io/tscholze/tobot-android-things-based-voice-controlled-vehicle-d7baca)
 
 ## Contributing
 
